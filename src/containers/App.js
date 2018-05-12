@@ -44,6 +44,7 @@ class App extends Component {
 
         return (
             <div>
+                <header>VISUAL HACKER NEWS</header>
                 Show:
                 <select value={showCount} onChange={this.handleSelect}>
                     {uiMap.select.map(option => {
