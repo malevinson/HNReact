@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
+import Story from '../components/Story';
 import './App.css';
 
 class App extends Component {
@@ -25,6 +26,14 @@ class App extends Component {
         this.setState({
             showCount: e.target.value
         });
+    };
+
+    handleClickComments = commentLink => {
+        //
+    };
+
+    handleClickStory = storyLink => {
+        //
     };
 
     render() {
@@ -75,10 +84,7 @@ class App extends Component {
                         })}
                     </div>
                 </div>
-                {/* story container css */}
-                {/* <Story {...{ handleClickStory, handleClickComments }} />
-                <Story {...{ handleClickStory, handleClickComments }} />
-                <Story {...{ handleClickStory, handleClickComments }} /> */}
+                <Story handleClickStory={this.handleClickStory} handleClickComments={this.handleClickComments} />
             </div>
         );
     }
