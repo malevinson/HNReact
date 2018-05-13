@@ -15,6 +15,34 @@ class App extends Component {
             stories: [],
             lastFetchTimestamp: null
         };
+
+        this.sampleStory = {
+            by: 'olifrost',
+            descendants: 30,
+            id: 17059575,
+            kids: [
+                17060134,
+                17060002,
+                17060203,
+                17060012,
+                17059975,
+                17059964,
+                17060127,
+                17060299,
+                17060200,
+                17060174,
+                17059918,
+                17059957,
+                17059981,
+                17060133,
+                17059853
+            ],
+            score: 129,
+            time: 1526227334,
+            title: 'Flopstarter: a platform for bad ideas',
+            type: 'story',
+            url: 'http://flopstarter.com/'
+        };
     }
 
     componentDidMount() {
@@ -109,6 +137,8 @@ class App extends Component {
 
         console.log(this.state);
 
+        console.log(JSON.stringify(this.state.stories[1]));
+
         const uiMap = {
             buttons: [
                 { name: 'Default', styles: 'default' },
@@ -152,7 +182,17 @@ class App extends Component {
                         })}
                     </div>
                 </div>
-                <Story handleClickStory={this.handleClickStory} handleClickComments={this.handleClickComments} />
+                <Story
+                    name={this.sampleStory.title}
+                    url={this.sampleStory.url}
+                    time={this.sampleStory.time}
+                    rating={this.sampleStory.score}
+                    comments={this.sampleStory.descendants}
+                    number={this.state.frontPageIds.indexOf(this.sampleStory.id) + 1}
+                    source={this.getDomain(this.sampleStory.url)}
+                    handleClickStory={this.handleClickStory}
+                    handleClickComments={this.handleClickComments}
+                />
             </div>
         );
     }
