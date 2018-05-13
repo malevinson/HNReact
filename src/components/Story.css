@@ -1,0 +1,30 @@
+.story {
+    border: 0.1rem solid green;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.story-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.number {
+    padding-top: 0.2rem;
+    font-size: 0.7rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: grey;
+    transition-duration: 500ms;
+    cursor: pointer;
+}
+
+.source {
+    padding-top: 0.2rem;
+    font-size: 0.7rem;
+}
