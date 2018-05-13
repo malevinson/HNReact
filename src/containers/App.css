@@ -10,3 +10,22 @@ header {
     box-shadow: 1px 1px 3px grey;
     background: linear-gradient(45deg, #da5b00, #e49a2a);
 }
+
+.select {
+    text-align: center;
+    margin: 1rem auto;
+}
+
+.controls {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.control-text {
+    margin: 0.3rem auto;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+}

@@ -1,11 +1,30 @@
 import React from 'react';
+import './Button.css';
 
 const Button = props => {
-    const { showIcon, iconDirection, styles, handleClickButton, children } = props;
+    const { showIcon, sortDirectionUp, styles, handleClickButton, children } = props;
+
+    let className = 'fas fa-2x fa-angle-',
+        alt = 'arrow ',
+        btnStyles = styles;
+
+    if (sortDirectionUp) {
+        className += 'up top';
+        alt += 'up';
+        if (children === 'Ratio' && showIcon) {
+            btnStyles += '-up';
+        }
+    } else {
+        className += 'down down';
+        alt += 'down';
+        if (children === 'Ratio' && showIcon) {
+            btnStyles += '-down';
+        }
+    }
 
     return (
-        <button onClick={() => handleClickButton(children)} className={'button ' + styles}>
-            {showIcon && <img src="./sortArrow.png" alt={'arrow ' + iconDirection} />}
+        <button onClick={() => handleClickButton(children)} className={btnStyles}>
+            {showIcon && <i {...{ className, alt }} />}
             {children}
         </button>
     );

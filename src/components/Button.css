@@ -1,1 +1,47 @@
 /* modular css like this */
+
+button {
+    outline: none;
+    height: 2rem;
+    width: 4rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 640px) {
+    button {
+        width: 6rem;
+        height: 2.6rem;
+    }
+}
+
+i {
+    position: absolute;
+    left: calc(50% - 0.4rem);
+}
+
+.top {
+    top: -0.3rem;
+}
+
+.down {
+    bottom: -0.3rem;
+}
+
+.rating {
+    background-color: #35e80d;
+}
+
+.comments {
+    background-color: #ffb30e;
+}
+
+.hybrid-up {
+    background: linear-gradient(rgb(255, 179, 14), white, rgb(53, 232, 13));
+}
+.hybrid-down {
+    background: linear-gradient(rgb(53, 232, 13), white, rgb(255, 179, 14));
+}

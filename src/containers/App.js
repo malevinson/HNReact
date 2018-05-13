@@ -37,7 +37,7 @@ class App extends Component {
                 { name: 'Default', styles: 'default' },
                 { name: 'Rating', styles: 'rating' },
                 { name: 'Comments', styles: 'comments' },
-                { name: 'Discussion Ratio', styles: 'hybrid' }
+                { name: 'Ratio', styles: 'hybrid' }
             ],
             select: [30, 60, 100, 200, 500]
         };
@@ -45,29 +45,36 @@ class App extends Component {
         return (
             <div>
                 <header>VISUAL HACKER NEWS</header>
-                Show:
-                <select value={showCount} onChange={this.handleSelect}>
-                    {uiMap.select.map(option => {
-                        return (
-                            <option key={option} value={option}>
-                                {option}
-                            </option>
-                        );
-                    })}
-                </select>
-                {uiMap.buttons.map(button => {
-                    return (
-                        <Button
-                            key={button.name}
-                            handleClickButton={this.handleClickButton}
-                            showIcon={button.name === activeButton}
-                            iconDirection={sortDirectionUp}
-                            styles={button.styles}
-                        >
-                            {button.name}
-                        </Button>
-                    );
-                })}
+                <div className="select">
+                    SHOW:
+                    <select value={showCount} onChange={this.handleSelect}>
+                        {uiMap.select.map(option => {
+                            return (
+                                <option key={option} value={option}>
+                                    {option}
+                                </option>
+                            );
+                        })}
+                    </select>
+                </div>
+                <div className="controls">
+                    <div className="control-text">SORT BY:</div>
+                    <div className="button-group">
+                        {uiMap.buttons.map(button => {
+                            return (
+                                <Button
+                                    key={button.name}
+                                    handleClickButton={this.handleClickButton}
+                                    showIcon={button.name === activeButton}
+                                    sortDirectionUp={sortDirectionUp}
+                                    styles={button.styles}
+                                >
+                                    {button.name}
+                                </Button>
+                            );
+                        })}
+                    </div>
+                </div>
                 {/* story container css */}
                 {/* <Story {...{ handleClickStory, handleClickComments }} />
                 <Story {...{ handleClickStory, handleClickComments }} />
