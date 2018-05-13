@@ -134,29 +134,46 @@ class App extends Component {
         });
     };
 
-    handleClickComments = commentLink => {
-        //
-    };
-
-    handleClickStory = storyLink => {
-        //
-    };
-
     sortStories(stories, activeButton, frontPageIds, sortDirectionUp) {
         let unsortedStories = stories;
-        //
         if (activeButton === 'Default') {
-            //
-            // this.state.frontPageIds.indexOf(story.id)
             if (sortDirectionUp) {
                 unsortedStories.sort(function(a, b) {
-                    // return a - b;
                     return frontPageIds.indexOf(a.id) - frontPageIds.indexOf(b.id);
                 });
             } else {
-                //
                 unsortedStories.sort(function(a, b) {
                     return frontPageIds.indexOf(b.id) - frontPageIds.indexOf(a.id);
+                });
+            }
+        } else if (activeButton === 'Rating') {
+            if (sortDirectionUp) {
+                unsortedStories.sort(function(a, b) {
+                    return a.score - b.score;
+                });
+            } else {
+                unsortedStories.sort(function(a, b) {
+                    return b.score - a.score;
+                });
+            }
+        } else if (activeButton === 'Comments') {
+            if (sortDirectionUp) {
+                unsortedStories.sort(function(a, b) {
+                    return a.descendants - b.descendants;
+                });
+            } else {
+                unsortedStories.sort(function(a, b) {
+                    return b.descendants - a.descendants;
+                });
+            }
+        } else if (activeButton === 'Ratio') {
+            if (sortDirectionUp) {
+                unsortedStories.sort(function(a, b) {
+                    return a.descendants / a.score - b.descendants / b.score;
+                });
+            } else {
+                unsortedStories.sort(function(a, b) {
+                    return b.descendants / b.score - a.descendants / a.score;
                 });
             }
         }
@@ -181,6 +198,8 @@ class App extends Component {
         };
 
         let sortedStories = this.sortStories(stories, activeButton, frontPageIds, sortDirectionUp);
+
+        sortedStories = sortedStories.slice(0, showCount);
 
         return (
             <div>
@@ -220,6 +239,8 @@ class App extends Component {
                         return (
                             <Story
                                 key={story.id}
+                                styleRating={{ width: story.score / this.state.maxRating * 200 + 'px' }}
+                                styleComments={{ width: story.descendants / this.state.maxComments * 200 + 'px' }}
                                 name={story.title}
                                 url={story.url}
                                 time={story.time}
@@ -227,8 +248,6 @@ class App extends Component {
                                 comments={story.descendants}
                                 number={this.state.frontPageIds.indexOf(story.id) + 1}
                                 source={this.getDomain(story.url)}
-                                handleClickStory={this.handleClickStory}
-                                handleClickComments={this.handleClickComments}
                             />
                         );
                     })}

@@ -1,6 +1,7 @@
 .story-row {
     display: flex;
     justify-content: space-between;
+    text-align: center;
 }
 
 .number {
@@ -9,6 +10,7 @@
 }
 
 a {
+    font-size: 0.9rem;
     text-decoration: none;
 }
 
@@ -23,6 +25,63 @@ a:hover {
     font-size: 0.7rem;
 }
 
+.time {
+    font-size: 0.7rem;
+    padding-top: 0.4rem;
+    float: right;
+}
+
 .story {
-    border: 0.1rem solid red;
+    /* border: 0.1rem solid red; */
+    margin: 0.2rem 0;
+    background-color: #e0dfdf;
+    box-shadow: 0px 0px 1px;
+    height: 45px;
+    position: relative;
+}
+
+.rating-bars {
+    /* border: 0.1rem solid purple; */
+    width: 200px;
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    left: calc(50% - 200px - 5px);
+}
+
+.rating-fill {
+    /* border: 0.1rem solid green; */
+    /* padding-top: 0.2rem; */
+    background-color: #35e80d;
+    direction: rtl;
+    float: right;
+    text-align: right;
+    box-shadow: 0px 0px 2px;
+}
+
+.comment-bars {
+    /* float: left; */
+    /* padding-bottom: 0.2rem; */
+    position: absolute;
+    width: 200px;
+    right: calc(50% - 200px - 5px);
+    top: 20px;
+    /* height: 20px; */
+    /* left: 50%; */
+    /* border: 0.1rem solid red; */
+    display: inline-block;
+}
+
+.comment-fill {
+    float: left;
+    background-color: #ffb30e;
+    box-shadow: 0px 0px 2px;
+    transition-property: background-color;
+    transition-duration: 2s;
+}
+
+.comment-fill:hover {
+    background-color: #ff0e0e;
+    transition-duration: 500ms;
+    cursor: pointer;
 }
