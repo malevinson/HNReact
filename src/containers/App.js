@@ -13,7 +13,9 @@ class App extends Component {
             showCount: '100',
             frontPageIds: [],
             stories: [],
-            lastFetchTimestamp: null
+            lastFetchTimestamp: null,
+            maxRating: 0,
+            maxComments: 0
         };
 
         this.sampleStory = {
@@ -65,7 +67,9 @@ class App extends Component {
                 this.setState(
                     {
                         frontPageIds: ids,
-                        lastFetchTimestamp: +new Date()
+                        lastFetchTimestamp: +new Date(),
+                        maxRating: 0,
+                        maxComments: 0
                     },
                     () => {
                         this.getStories();
@@ -85,6 +89,12 @@ class App extends Component {
             fetch('https://hacker-news.firebaseio.com/v0/item/' + id + '.json')
                 .then(res => res.json())
                 .then(story => {
+                    if (this.state.maxRating < story.score) {
+                        this.setState({ maxRating: story.score });
+                    }
+                    if (this.state.maxComments < story.descendants) {
+                        this.setState({ maxComments: story.descendants });
+                    }
                     this.setState({ stories: this.state.stories.concat(story) });
                     console.log(story);
                 });
@@ -132,8 +142,29 @@ class App extends Component {
         //
     };
 
+    sortStories(stories, activeButton, frontPageIds, sortDirectionUp) {
+        let unsortedStories = stories;
+        //
+        if (activeButton === 'Default') {
+            //
+            // this.state.frontPageIds.indexOf(story.id)
+            if (sortDirectionUp) {
+                unsortedStories.sort(function(a, b) {
+                    // return a - b;
+                    return frontPageIds.indexOf(a.id) - frontPageIds.indexOf(b.id);
+                });
+            } else {
+                //
+                unsortedStories.sort(function(a, b) {
+                    return frontPageIds.indexOf(b.id) - frontPageIds.indexOf(a.id);
+                });
+            }
+        }
+        return unsortedStories;
+    }
+
     render() {
-        const { activeButton, sortDirectionUp, showCount } = this.state;
+        const { activeButton, sortDirectionUp, showCount, stories, frontPageIds } = this.state;
 
         console.log(this.state);
 
@@ -148,6 +179,8 @@ class App extends Component {
             ],
             select: [30, 60, 100, 200, 500]
         };
+
+        let sortedStories = this.sortStories(stories, activeButton, frontPageIds, sortDirectionUp);
 
         return (
             <div>
@@ -182,17 +215,24 @@ class App extends Component {
                         })}
                     </div>
                 </div>
-                <Story
-                    name={this.sampleStory.title}
-                    url={this.sampleStory.url}
-                    time={this.sampleStory.time}
-                    rating={this.sampleStory.score}
-                    comments={this.sampleStory.descendants}
-                    number={this.state.frontPageIds.indexOf(this.sampleStory.id) + 1}
-                    source={this.getDomain(this.sampleStory.url)}
-                    handleClickStory={this.handleClickStory}
-                    handleClickComments={this.handleClickComments}
-                />
+                <div className="stories-container">
+                    {sortedStories.map(story => {
+                        return (
+                            <Story
+                                key={story.id}
+                                name={story.title}
+                                url={story.url}
+                                time={story.time}
+                                rating={story.score}
+                                comments={story.descendants}
+                                number={this.state.frontPageIds.indexOf(story.id) + 1}
+                                source={this.getDomain(story.url)}
+                                handleClickStory={this.handleClickStory}
+                                handleClickComments={this.handleClickComments}
+                            />
+                        );
+                    })}
+                </div>
             </div>
         );
     }
