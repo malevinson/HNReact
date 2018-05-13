@@ -7,7 +7,75 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { activeButton: 'Default', sortDirectionUp: true, showCount: 100 };
+        this.state = {
+            activeButton: 'Default',
+            sortDirectionUp: true,
+            showCount: '100',
+            frontPageIds: [],
+            stories: [],
+            lastFetchTimestamp: null
+        };
+    }
+
+    componentDidMount() {
+        const savedState = JSON.parse(localStorage.getItem('visual-hacker-news'));
+        const timeStamp = savedState ? savedState.lastFetchTimestamp : 0;
+        const TWO_MINUTES = 1000 * 60 * 2;
+
+        if (+new Date() - timeStamp > TWO_MINUTES) {
+            this.getFrontPageIds();
+        } else {
+            const state = JSON.parse(localStorage.getItem('visual-hacker-news'));
+            this.setState(state);
+        }
+    }
+
+    getFrontPageIds() {
+        fetch('https://hacker-news.firebaseio.com/v0/topstories.json')
+            .then(res => res.json())
+            .then(ids => {
+                this.setState(
+                    {
+                        frontPageIds: ids,
+                        lastFetchTimestamp: +new Date()
+                    },
+                    () => {
+                        this.getStories();
+                    }
+                );
+            });
+    }
+
+    componentDidUpdate(prevState, nextState) {
+        localStorage.setItem('visual-hacker-news', JSON.stringify(this.state));
+    }
+
+    getStories() {
+        const ids = this.state.frontPageIds;
+
+        ids.forEach(id => {
+            fetch('https://hacker-news.firebaseio.com/v0/item/' + id + '.json')
+                .then(res => res.json())
+                .then(story => {
+                    this.setState({ stories: this.state.stories.concat(story) });
+                    console.log(story);
+                });
+        });
+    }
+
+    getDomain(url) {
+        const a = document.createElement('a');
+        a.href = url;
+        let host = a.hostname;
+        host = host.split('.');
+        let domain = host.pop();
+        domain = host.pop() + '.' + domain;
+
+        if (domain.includes('undefined')) {
+            domain = 'news.ycombinator.com';
+        }
+
+        return domain;
     }
 
     handleClickButton = buttonName => {
