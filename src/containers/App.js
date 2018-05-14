@@ -3,6 +3,16 @@ import Button from '../components/Button';
 import Story from '../components/Story';
 import './App.css';
 
+const uiMap = {
+    buttons: [
+        { name: 'Default', styles: 'default' },
+        { name: 'Rating', styles: 'rating' },
+        { name: 'Comments', styles: 'comments' },
+        { name: 'Ratio', styles: 'hybrid' }
+    ],
+    select: [30, 60, 100, 200, 500]
+};
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -10,40 +20,12 @@ class App extends Component {
         this.state = {
             activeButton: 'Default',
             sortDirectionUp: true,
-            showCount: '100',
+            showCount: '500',
             frontPageIds: [],
             stories: [],
             lastFetchTimestamp: null,
             maxRating: 0,
             maxComments: 0
-        };
-
-        this.sampleStory = {
-            by: 'olifrost',
-            descendants: 30,
-            id: 17059575,
-            kids: [
-                17060134,
-                17060002,
-                17060203,
-                17060012,
-                17059975,
-                17059964,
-                17060127,
-                17060299,
-                17060200,
-                17060174,
-                17059918,
-                17059957,
-                17059981,
-                17060133,
-                17059853
-            ],
-            score: 129,
-            time: 1526227334,
-            title: 'Flopstarter: a platform for bad ideas',
-            type: 'story',
-            url: 'http://flopstarter.com/'
         };
     }
 
@@ -96,7 +78,6 @@ class App extends Component {
                         this.setState({ maxComments: story.descendants });
                     }
                     this.setState({ stories: this.state.stories.concat(story) });
-                    console.log(story);
                 });
         });
     }
@@ -109,7 +90,7 @@ class App extends Component {
         let domain = host.pop();
         domain = host.pop() + '.' + domain;
 
-        if (domain.includes('undefined')) {
+        if (domain.includes('undefined') || domain.includes('herokuapp')) {
             domain = 'news.ycombinator.com';
         }
 
@@ -134,69 +115,41 @@ class App extends Component {
         });
     };
 
-    sortStories(stories, activeButton, frontPageIds, sortDirectionUp) {
-        let unsortedStories = stories;
-        if (activeButton === 'Default') {
-            if (sortDirectionUp) {
-                unsortedStories.sort(function(a, b) {
-                    return frontPageIds.indexOf(a.id) - frontPageIds.indexOf(b.id);
-                });
-            } else {
-                unsortedStories.sort(function(a, b) {
-                    return frontPageIds.indexOf(b.id) - frontPageIds.indexOf(a.id);
-                });
-            }
-        } else if (activeButton === 'Rating') {
-            if (sortDirectionUp) {
-                unsortedStories.sort(function(a, b) {
-                    return a.score - b.score;
-                });
-            } else {
-                unsortedStories.sort(function(a, b) {
-                    return b.score - a.score;
-                });
-            }
-        } else if (activeButton === 'Comments') {
-            if (sortDirectionUp) {
-                unsortedStories.sort(function(a, b) {
-                    return a.descendants - b.descendants;
-                });
-            } else {
-                unsortedStories.sort(function(a, b) {
-                    return b.descendants - a.descendants;
-                });
-            }
-        } else if (activeButton === 'Ratio') {
-            if (sortDirectionUp) {
-                unsortedStories.sort(function(a, b) {
-                    return a.descendants / a.score - b.descendants / b.score;
-                });
-            } else {
-                unsortedStories.sort(function(a, b) {
-                    return b.descendants / b.score - a.descendants / a.score;
-                });
-            }
+    sortBasedOnDirection(a, b, sortDirectionUp) {
+        if (sortDirectionUp) {
+            return a - b;
+        } else {
+            return b - a;
         }
-        return unsortedStories;
+    }
+
+    sortStories(stories, activeButton, frontPageIds, sortDirectionUp) {
+        if (activeButton === 'Default') {
+            stories.sort((a, b) => {
+                return this.sortBasedOnDirection(
+                    frontPageIds.indexOf(a.id),
+                    frontPageIds.indexOf(b.id),
+                    sortDirectionUp
+                );
+            });
+        } else if (activeButton === 'Rating') {
+            stories.sort((a, b) => {
+                return this.sortBasedOnDirection(a.score, b.score, sortDirectionUp);
+            });
+        } else if (activeButton === 'Comments') {
+            stories.sort((a, b) => {
+                return this.sortBasedOnDirection(a.descendants, b.descendants, sortDirectionUp);
+            });
+        } else if (activeButton === 'Ratio') {
+            stories.sort((a, b) => {
+                return this.sortBasedOnDirection(a.descendants / a.score, b.descendants / b.score, sortDirectionUp);
+            });
+        }
+        return stories;
     }
 
     render() {
-        const { activeButton, sortDirectionUp, showCount, stories, frontPageIds } = this.state;
-
-        console.log(this.state);
-
-        console.log(JSON.stringify(this.state.stories[1]));
-
-        const uiMap = {
-            buttons: [
-                { name: 'Default', styles: 'default' },
-                { name: 'Rating', styles: 'rating' },
-                { name: 'Comments', styles: 'comments' },
-                { name: 'Ratio', styles: 'hybrid' }
-            ],
-            select: [30, 60, 100, 200, 500]
-        };
-
+        const { activeButton, sortDirectionUp, showCount, stories, frontPageIds, maxRating, maxComments } = this.state;
         let sortedStories = this.sortStories(stories, activeButton, frontPageIds, sortDirectionUp);
 
         sortedStories = sortedStories.slice(0, showCount);
@@ -239,14 +192,14 @@ class App extends Component {
                         return (
                             <Story
                                 key={story.id}
-                                styleRating={{ width: story.score / this.state.maxRating * 200 + 'px' }}
-                                styleComments={{ width: story.descendants / this.state.maxComments * 200 + 'px' }}
+                                styleRating={{ width: story.score / maxRating * 200 + 'px' }}
+                                styleComments={{ width: story.descendants / maxComments * 200 + 'px' }}
                                 name={story.title}
                                 url={story.url}
                                 time={story.time}
                                 rating={story.score}
                                 comments={story.descendants}
-                                number={this.state.frontPageIds.indexOf(story.id) + 1}
+                                number={frontPageIds.indexOf(story.id) + 1}
                                 source={this.getDomain(story.url)}
                             />
                         );
