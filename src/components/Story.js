@@ -1,7 +1,7 @@
 import React from 'react';
 import './Story.css';
 
-const Story = ({ name, time, rating, comments, number, source, url, styleRating, styleComments }) => {
+const Story = ({ name, time, id, rating, comments, number, source, url, styleRating, styleComments }) => {
     const hours = Math.floor((+new Date() / 1000 - time) / 60 / 60);
 
     const minutes = Math.round(((+new Date() / 1000 - time) / 60) % 60);
@@ -22,7 +22,9 @@ const Story = ({ name, time, rating, comments, number, source, url, styleRating,
             </div>
             <div className="comment-bars">
                 <div className="comment-fill" style={styleComments}>
-                    {comments}
+                    <a target="_blank" href={'https://news.ycombinator.com/item?id=' + id}>
+                        {comments}
+                    </a>
                 </div>
             </div>
             <span className="time">

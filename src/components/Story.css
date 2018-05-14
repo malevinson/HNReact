@@ -1,12 +1,16 @@
+.story {
+    margin: 0.2rem 0;
+    background-color: #e0dfdf;
+    box-shadow: 0px 0px 1px;
+    height: 45px;
+    position: relative;
+    font-size: 0.7rem;
+}
+
 .story-row {
     display: flex;
     justify-content: space-between;
     text-align: center;
-}
-
-.number {
-    padding-top: 0.2rem;
-    font-size: 0.7rem;
 }
 
 a {
@@ -20,29 +24,17 @@ a:hover {
     cursor: pointer;
 }
 
+.number {
+    padding-top: 0.2rem;
+}
+
 .source {
     padding-top: 0.2rem;
-    font-size: 0.7rem;
-}
-
-.time {
-    font-size: 0.7rem;
-    padding-top: 0.4rem;
-    float: right;
-}
-
-.story {
-    /* border: 0.1rem solid red; */
-    margin: 0.2rem 0;
-    background-color: #e0dfdf;
-    box-shadow: 0px 0px 1px;
-    height: 45px;
-    position: relative;
 }
 
 .rating-bars {
-    /* border: 0.1rem solid purple; */
     width: 200px;
+    font-size: 0.9rem;
     display: inline-block;
     position: absolute;
     top: 20px;
@@ -50,8 +42,6 @@ a:hover {
 }
 
 .rating-fill {
-    /* border: 0.1rem solid green; */
-    /* padding-top: 0.2rem; */
     background-color: #35e80d;
     direction: rtl;
     float: right;
@@ -60,15 +50,10 @@ a:hover {
 }
 
 .comment-bars {
-    /* float: left; */
-    /* padding-bottom: 0.2rem; */
     position: absolute;
     width: 200px;
     right: calc(50% - 200px - 5px);
     top: 20px;
-    /* height: 20px; */
-    /* left: 50%; */
-    /* border: 0.1rem solid red; */
     display: inline-block;
 }
 
@@ -84,4 +69,9 @@ a:hover {
     background-color: #ff0e0e;
     transition-duration: 500ms;
     cursor: pointer;
+}
+
+.time {
+    padding-top: 0.4rem;
+    float: right;
 }

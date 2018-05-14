@@ -194,6 +194,7 @@ class App extends Component {
                                 key={story.id}
                                 styleRating={{ width: story.score / maxRating * 200 + 'px' }}
                                 styleComments={{ width: story.descendants / maxComments * 200 + 'px' }}
+                                id={story.id}
                                 name={story.title}
                                 url={story.url}
                                 time={story.time}
