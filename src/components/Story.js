@@ -21,11 +21,11 @@ const Story = ({ name, time, id, rating, comments, number, source, url, styleRat
                 </div>
             </div>
             <div className="comment-bars">
-                <div className="comment-fill" style={styleComments}>
-                    <a target="_blank" href={'https://news.ycombinator.com/item?id=' + id}>
+                <a target="_blank" href={'https://news.ycombinator.com/item?id=' + id}>
+                    <div className="comment-fill" style={styleComments}>
                         {comments}
-                    </a>
-                </div>
+                    </div>
+                </a>
             </div>
             <span className="time">
                 {hours !== 0 ? (
