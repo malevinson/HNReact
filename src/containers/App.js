@@ -18,8 +18,8 @@ class App extends Component {
         super(props);
 
         this.state = {
-            activeButton: 'Default',
-            sortDirectionUp: true,
+            activeButton: 'Ratio',
+            sortDirectionUp: false,
             showCount: '500',
             frontPageIds: [],
             stories: [],
@@ -65,9 +65,9 @@ class App extends Component {
     }
 
     getStories() {
-        const ids = this.state.frontPageIds;
+        let ids = this.state.frontPageIds;
 
-        ids.forEach(id => {
+        ids.slice().forEach(id => {
             fetch('https://hacker-news.firebaseio.com/v0/item/' + id + '.json')
                 .then(res => res.json())
                 .then(story => {
@@ -153,6 +153,7 @@ class App extends Component {
         let sortedStories = this.sortStories(stories, activeButton, frontPageIds, sortDirectionUp);
 
         sortedStories = sortedStories.slice(0, showCount);
+        console.log(this.state);
 
         return (
             <div>
