@@ -30,16 +30,16 @@ class App extends Component {
     }
 
     componentDidMount() {
-        const savedState = JSON.parse(localStorage.getItem('visual-hacker-news'));
-        const timeStamp = savedState ? savedState.lastFetchTimestamp : 0;
-        const TWO_MINUTES = 1000 * 60 * 2;
+        // const savedState = JSON.parse(localStorage.getItem('visual-hacker-news'));
+        // const timeStamp = savedState ? savedState.lastFetchTimestamp : 0;
+        // const TWO_MINUTES = 1000 * 60 * 2;
 
-        if (+new Date() - timeStamp > TWO_MINUTES) {
-            this.getFrontPageIds();
-        } else {
-            const state = JSON.parse(localStorage.getItem('visual-hacker-news'));
-            this.setState(state);
-        }
+        // if (+new Date() - timeStamp > TWO_MINUTES) {
+        this.getFrontPageIds();
+        // } else {
+        //     const state = JSON.parse(localStorage.getItem('visual-hacker-news'));
+        //     this.setState(state);
+        // }
     }
 
     getFrontPageIds() {
@@ -71,12 +71,12 @@ class App extends Component {
             fetch('https://hacker-news.firebaseio.com/v0/item/' + id + '.json')
                 .then(res => res.json())
                 .then(story => {
-                    if (this.state.maxRating < story.score) {
-                        this.setState({ maxRating: story.score });
-                    }
-                    if (this.state.maxComments < story.descendants) {
-                        this.setState({ maxComments: story.descendants });
-                    }
+                    // if (this.state.maxRating < story.score) {
+                    //     this.setState({ maxRating: story.score });
+                    // }
+                    // if (this.state.maxComments < story.descendants) {
+                    //     this.setState({ maxComments: story.descendants });
+                    // }
                     this.setState({ stories: this.state.stories.concat(story) });
                 });
         });
