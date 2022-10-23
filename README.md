@@ -1,1 +1,3 @@
 Work in progress. A better visual representation of Hacker News (https://news.ycombinator.com/)
+
+Upgrade heroku and force reupdate...
