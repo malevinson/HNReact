@@ -1,3 +1,3 @@
 Work in progress. A better visual representation of Hacker News (https://news.ycombinator.com/)
 
-Upgrade heroku and force reupdate 2...
+Currently at https://hn-react-9n5bahhwo-malevinson.vercel.app/
