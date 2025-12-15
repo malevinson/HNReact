@@ -2,15 +2,16 @@ import React from 'react';
 import './Story.css';
 
 const Story = ({ name, time, id, rating, comments, number, source, url, styleRating, styleComments }) => {
-    const hours = Math.floor((+new Date() / 1000 - time) / 60 / 60);
-
-    const minutes = Math.round(((+new Date() / 1000 - time) / 60) % 60);
+    const currentTime = Math.floor(Date.now() / 1000);
+    const elapsedSeconds = currentTime - (time || 0);
+    const hours = Math.floor(elapsedSeconds / 3600);
+    const minutes = Math.round((elapsedSeconds % 3600) / 60);
 
     return (
         <div className="story">
             <div className="story-row">
                 <span className="number">{number}</span>
-                <a target="_blank" href={url}>
+                <a target="_blank" rel="noopener noreferrer" href={url}>
                     {name}
                 </a>
                 <span className="source">{source}</span>
@@ -21,7 +22,7 @@ const Story = ({ name, time, id, rating, comments, number, source, url, styleRat
                 </div>
             </div>
             <div className="comment-bars">
-                <a target="_blank" href={'https://news.ycombinator.com/item?id=' + id}>
+                <a target="_blank" rel="noopener noreferrer" href={`https://news.ycombinator.com/item?id=${id}`}>
                     <div className="comment-fill" style={styleComments}>
                         {comments}
                     </div>
