@@ -31,6 +31,7 @@ export const useLocalStorage = (
         } catch (e) {
             console.error('Error saving to localStorage:', e);
         }
-    }, [activeButton, sortDirectionUp, showCount, frontPageIds, stories, lastFetchTimestamp, maxRating, maxComments, hasLoadedFromStorage]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeButton, sortDirectionUp, showCount, frontPageIds, stories, lastFetchTimestamp, maxRating, maxComments]);
 };
 

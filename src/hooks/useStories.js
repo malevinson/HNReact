@@ -148,11 +148,6 @@ export const useStories = (activeButton, showCount) => {
         maxRating,
         maxComments,
         isLoading,
-        setFrontPageIds,
-        setStories,
-        setLastFetchTimestamp,
-        setMaxRating,
-        setMaxComments,
         hasLoadedFromStorage
     };
 };

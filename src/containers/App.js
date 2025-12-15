@@ -21,11 +21,6 @@ const AppContent = () => {
         maxRating,
         maxComments,
         isLoading,
-        setFrontPageIds,
-        setStories,
-        setLastFetchTimestamp,
-        setMaxRating,
-        setMaxComments,
         hasLoadedFromStorage
     } = useStories(activeButton, showCount);
 
