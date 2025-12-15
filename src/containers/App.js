@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import { Box, makeStyles } from '@material-ui/core';
 import Header from '../components/Header';
 import Controls from '../components/Controls';
 import StoryList from '../components/StoryList';
@@ -7,9 +8,16 @@ import { useStories } from '../hooks/useStories';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { sortStories } from '../utils/storyUtils';
 import { SORT_OPTIONS, STORAGE_KEY } from '../utils/constants';
-import './App.css';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        minHeight: '100vh',
+        backgroundColor: theme.palette.background.default,
+    },
+}));
 
 const AppContent = () => {
+    const classes = useStyles();
     const [activeButton, setActiveButton] = useState(SORT_OPTIONS.RATIO);
     const [sortDirectionUp, setSortDirectionUp] = useState(false);
     const [showCount, setShowCount] = useState('500');
@@ -71,7 +79,7 @@ const AppContent = () => {
     }, [stories, activeButton, frontPageIds, sortDirectionUp, showCount]);
 
     return (
-        <div>
+        <Box className={classes.root}>
             <Header />
             <Controls
                 showCount={showCount}
@@ -87,7 +95,7 @@ const AppContent = () => {
                 maxRating={maxRating}
                 maxComments={maxComments}
             />
-        </div>
+        </Box>
     );
 };
 
