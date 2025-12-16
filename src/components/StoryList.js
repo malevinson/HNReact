@@ -5,8 +5,11 @@ import { getDomain } from '../utils/storyUtils';
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        padding: theme.spacing(3),
+        padding: theme.spacing(1, 2),
         maxWidth: '900px',
+        [theme.breakpoints.down('sm')]: {
+            padding: theme.spacing(0.5, 1),
+        },
     },
 }));
 
