@@ -170,7 +170,7 @@ const useStyles = makeStyles((theme) => ({
         height: '20px',
         width: '100%',
         maxWidth: '100%',
-        backgroundColor: theme.palette.grey[200],
+        backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[800] : theme.palette.grey[200],
         borderRadius: theme.shape.borderRadius,
         overflow: 'hidden',
         [theme.breakpoints.down('sm')]: {
@@ -203,7 +203,7 @@ const useStyles = makeStyles((theme) => ({
         height: '20px',
         width: '100%',
         maxWidth: '100%',
-        backgroundColor: theme.palette.grey[200],
+        backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[800] : theme.palette.grey[200],
         borderRadius: theme.shape.borderRadius,
         overflow: 'hidden',
         [theme.breakpoints.down('sm')]: {

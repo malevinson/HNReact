@@ -1,8 +1,10 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 // Modern color palette - inspired by tech/coding aesthetic
+// Dark mode by default
 const theme = createMuiTheme({
   palette: {
+    type: 'dark',
     primary: {
       main: '#FF6B35', // Vibrant orange (Hacker News inspired)
       light: '#FF8C61',
@@ -10,18 +12,18 @@ const theme = createMuiTheme({
       contrastText: '#FFFFFF',
     },
     secondary: {
-      main: '#1A1A2E', // Deep dark blue/navy
-      light: '#2D2D44',
-      dark: '#0F0F1A',
+      main: '#42A5F5', // Blue for secondary actions
+      light: '#64B5F6',
+      dark: '#1976D2',
       contrastText: '#FFFFFF',
     },
     background: {
-      default: '#F5F5F5', // Light gray background
-      paper: '#FFFFFF',
+      default: '#121212', // Dark background
+      paper: '#1E1E1E', // Slightly lighter for cards
     },
     text: {
-      primary: '#1A1A2E',
-      secondary: '#6C757D',
+      primary: '#FFFFFF',
+      secondary: '#B0B0B0',
     },
     error: {
       main: '#FF4444',
