@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Typography, Select, MenuItem, FormControl, InputLabel, Button, makeStyles } from '@material-ui/core';
-import { ArrowUpward, ArrowDownward } from '@material-ui/icons';
+import { Box, Typography, Select, MenuItem, FormControl, InputLabel, Button, IconButton, makeStyles } from '@material-ui/core';
+import { ArrowUpward, ArrowDownward, Brightness4, Brightness7 } from '@material-ui/icons';
 import { UI_CONFIG } from '../utils/constants';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,8 +36,22 @@ const useStyles = makeStyles((theme) => ({
     rightColumn: {
         display: 'flex',
         justifyContent: 'flex-end',
+        alignItems: 'center',
         [theme.breakpoints.down('sm')]: {
-            display: 'none',
+            justifyContent: 'center',
+            width: '100%',
+        },
+    },
+    themeToggle: {
+        padding: theme.spacing(0.75),
+        [theme.breakpoints.down('sm')]: {
+            padding: theme.spacing(0.5),
+            fontSize: '1.2rem',
+        },
+        '& .MuiSvgIcon-root': {
+            [theme.breakpoints.down('sm')]: {
+                fontSize: '1.2rem',
+            },
         },
     },
     formControl: {
@@ -118,7 +132,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Controls = ({ showCount, activeButton, sortDirectionUp, onSelectChange, onButtonClick }) => {
+const Controls = ({ showCount, activeButton, sortDirectionUp, themeType, onSelectChange, onButtonClick, onThemeToggle }) => {
     const classes = useStyles();
     
     return (
@@ -174,7 +188,16 @@ const Controls = ({ showCount, activeButton, sortDirectionUp, onSelectChange, on
                 </Box>
             </Box>
             
-            <Box className={classes.rightColumn} />
+            <Box className={classes.rightColumn}>
+                <IconButton
+                    onClick={onThemeToggle}
+                    className={classes.themeToggle}
+                    size="small"
+                    aria-label="toggle theme"
+                >
+                    {themeType === 'dark' ? <Brightness7 /> : <Brightness4 />}
+                </IconButton>
+            </Box>
         </Box>
     );
 };

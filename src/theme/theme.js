@@ -2,9 +2,9 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 // Modern color palette - inspired by tech/coding aesthetic
 // Dark mode by default
-const theme = createMuiTheme({
+const createTheme = (type = 'dark') => createMuiTheme({
   palette: {
-    type: 'dark',
+    type,
     primary: {
       main: '#FF6B35', // Vibrant orange (Hacker News inspired)
       light: '#FF8C61',
@@ -18,12 +18,12 @@ const theme = createMuiTheme({
       contrastText: '#FFFFFF',
     },
     background: {
-      default: '#121212', // Dark background
-      paper: '#1E1E1E', // Slightly lighter for cards
+      default: type === 'dark' ? '#121212' : '#F5F5F5', // Dark or light background
+      paper: type === 'dark' ? '#1E1E1E' : '#FFFFFF', // Dark or light cards
     },
     text: {
-      primary: '#FFFFFF',
-      secondary: '#B0B0B0',
+      primary: type === 'dark' ? '#FFFFFF' : '#1A1A2E',
+      secondary: type === 'dark' ? '#B0B0B0' : '#6C757D',
     },
     error: {
       main: '#FF4444',
@@ -94,5 +94,5 @@ const theme = createMuiTheme({
   },
 });
 
-export default theme;
+export default createTheme;
 

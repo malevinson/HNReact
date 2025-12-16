@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, makeStyles, ThemeProvider } from '@material-ui/core';
 import Header from '../components/Header';
 import Controls from '../components/Controls';
 import StoryList from '../components/StoryList';
@@ -8,19 +8,13 @@ import { useStories } from '../hooks/useStories';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { sortStories } from '../utils/storyUtils';
 import { SORT_OPTIONS, STORAGE_KEY } from '../utils/constants';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        minHeight: '100vh',
-        backgroundColor: theme.palette.background.default,
-    },
-}));
+import createTheme from '../theme/theme';
 
 const AppContent = () => {
-    const classes = useStyles();
     const [activeButton, setActiveButton] = useState(SORT_OPTIONS.RATIO);
     const [sortDirectionUp, setSortDirectionUp] = useState(false);
     const [showCount, setShowCount] = useState('500');
+    const [themeType, setThemeType] = useState('dark');
 
     const {
         frontPageIds,
@@ -40,6 +34,7 @@ const AppContent = () => {
                 setActiveButton(savedState.activeButton || SORT_OPTIONS.RATIO);
                 setSortDirectionUp(savedState.sortDirectionUp || false);
                 setShowCount(savedState.showCount || '500');
+                setThemeType(savedState.themeType || 'dark');
             }
         } catch (e) {
             console.error('Error reading UI state from localStorage:', e);
@@ -51,6 +46,7 @@ const AppContent = () => {
         activeButton,
         sortDirectionUp,
         showCount,
+        themeType,
         frontPageIds,
         stories,
         lastFetchTimestamp,
@@ -71,12 +67,64 @@ const AppContent = () => {
         setShowCount(e.target.value);
     }, []);
 
+    const handleThemeToggle = useCallback(() => {
+        setThemeType(prev => prev === 'dark' ? 'light' : 'dark');
+    }, []);
+
     // Memoize sorted and sliced stories for performance
     const sortedStories = useMemo(() => {
         const sorted = sortStories(stories, activeButton, frontPageIds, sortDirectionUp);
         const count = parseInt(showCount, 10);
         return sorted.slice(0, count);
     }, [stories, activeButton, frontPageIds, sortDirectionUp, showCount]);
+
+    // Create theme based on current type
+    const theme = useMemo(() => createTheme(themeType), [themeType]);
+
+    return (
+        <ThemeProvider theme={theme}>
+            <AppContentInner
+                showCount={showCount}
+                activeButton={activeButton}
+                sortDirectionUp={sortDirectionUp}
+                themeType={themeType}
+                isLoading={isLoading}
+                stories={stories}
+                sortedStories={sortedStories}
+                frontPageIds={frontPageIds}
+                maxRating={maxRating}
+                maxComments={maxComments}
+                onSelectChange={handleSelect}
+                onButtonClick={handleClickButton}
+                onThemeToggle={handleThemeToggle}
+            />
+        </ThemeProvider>
+    );
+};
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        minHeight: '100vh',
+        backgroundColor: theme.palette.background.default,
+    },
+}));
+
+const AppContentInner = ({
+    showCount,
+    activeButton,
+    sortDirectionUp,
+    themeType,
+    isLoading,
+    stories,
+    sortedStories,
+    frontPageIds,
+    maxRating,
+    maxComments,
+    onSelectChange,
+    onButtonClick,
+    onThemeToggle,
+}) => {
+    const classes = useStyles();
 
     return (
         <Box className={classes.root}>
@@ -85,8 +133,10 @@ const AppContent = () => {
                 showCount={showCount}
                 activeButton={activeButton}
                 sortDirectionUp={sortDirectionUp}
-                onSelectChange={handleSelect}
-                onButtonClick={handleClickButton}
+                themeType={themeType}
+                onSelectChange={onSelectChange}
+                onButtonClick={onButtonClick}
+                onThemeToggle={onThemeToggle}
             />
             {isLoading && stories.length === 0 && <LoadingIndicator />}
             <StoryList
