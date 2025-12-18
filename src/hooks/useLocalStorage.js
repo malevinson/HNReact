@@ -6,6 +6,7 @@ export const useLocalStorage = (
     sortDirectionUp,
     showCount,
     themeType,
+    dateFilter,
     frontPageIds,
     stories,
     lastFetchTimestamp,
@@ -21,6 +22,7 @@ export const useLocalStorage = (
             sortDirectionUp,
             showCount,
             themeType,
+            dateFilter,
             frontPageIds,
             stories,
             lastFetchTimestamp,
@@ -34,6 +36,6 @@ export const useLocalStorage = (
             console.error('Error saving to localStorage:', e);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeButton, sortDirectionUp, showCount, themeType, frontPageIds, stories, lastFetchTimestamp, maxRating, maxComments]);
+    }, [activeButton, sortDirectionUp, showCount, themeType, dateFilter, frontPageIds, stories, lastFetchTimestamp, maxRating, maxComments]);
 };
 

@@ -24,8 +24,12 @@ const useStyles = makeStyles((theme) => ({
     leftColumn: {
         display: 'flex',
         justifyContent: 'flex-start',
+        gap: theme.spacing(1),
+        alignItems: 'center',
         [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column',
             justifyContent: 'stretch',
+            gap: theme.spacing(0.5),
         },
     },
     centerColumn: {
@@ -132,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Controls = ({ showCount, activeButton, sortDirectionUp, themeType, onSelectChange, onButtonClick, onThemeToggle }) => {
+const Controls = ({ showCount, activeButton, sortDirectionUp, themeType, dateFilter, onSelectChange, onDateFilterChange, onButtonClick, onThemeToggle }) => {
     const classes = useStyles();
     
     return (
@@ -153,6 +157,25 @@ const Controls = ({ showCount, activeButton, sortDirectionUp, themeType, onSelec
                         {UI_CONFIG.select.map(option => (
                             <MenuItem key={option} value={option}>
                                 {option}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <FormControl 
+                    variant="outlined" 
+                    className={classes.formControl}
+                    size="small"
+                >
+                    <InputLabel id="date-filter-label">Date</InputLabel>
+                    <Select
+                        labelId="date-filter-label"
+                        value={dateFilter}
+                        onChange={onDateFilterChange}
+                        label="Date"
+                    >
+                        {UI_CONFIG.dateFilter.map(option => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
                             </MenuItem>
                         ))}
                     </Select>

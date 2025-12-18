@@ -29,6 +29,22 @@ const sortBasedOnDirection = (a, b, sortDirectionUp) => {
     return sortDirectionUp ? a - b : b - a;
 };
 
+export const filterStoriesByDate = (stories, dateFilter) => {
+    if (!dateFilter || dateFilter === 'all') {
+        return stories;
+    }
+
+    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+    const filterDays = dateFilter === '10+' ? 10 : parseInt(dateFilter, 10);
+    const filterSeconds = filterDays * 24 * 60 * 60; // Convert days to seconds
+
+    return stories.filter(story => {
+        if (!story.time) return false;
+        const storyAge = currentTime - story.time;
+        return storyAge < filterSeconds; // Newer than = age is less than threshold
+    });
+};
+
 export const sortStories = (stories, activeButton, frontPageIds, sortDirectionUp) => {
     const sorted = [...stories];
     
