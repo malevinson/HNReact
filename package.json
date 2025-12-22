@@ -19,8 +19,8 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start": "REACT_APP_GIT_COMMIT_HASH=$(git rev-parse HEAD 2>/dev/null || echo 'unknown') NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
-    "build": "REACT_APP_GIT_COMMIT_HASH=$(git rev-parse HEAD 2>/dev/null || echo 'unknown') NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "start": "REACT_APP_GIT_COMMIT_HASH=$(git rev-parse HEAD 2>/dev/null || echo 'unknown') REACT_APP_GIT_COMMIT_MESSAGE=$(git log -1 --pretty=%s 2>/dev/null || echo 'unknown') NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "REACT_APP_GIT_COMMIT_HASH=$(git rev-parse HEAD 2>/dev/null || echo 'unknown') REACT_APP_GIT_COMMIT_MESSAGE=$(git log -1 --pretty=%s 2>/dev/null || echo 'unknown') NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
